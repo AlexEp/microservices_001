@@ -1,6 +1,7 @@
 ﻿using Inventory.Domain;
 using Inventory.Infrastructure.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -20,26 +21,38 @@ namespace Inventory.API.Controllers
 
         private readonly ILogger<ProductsController> _logger;
         private readonly IProductRepository _productRepository;
+        private readonly IConfiguration configuration;
 
-        public ProductsController(ILogger<ProductsController> logger, IProductRepository productRepository)
+        public ProductsController(ILogger<ProductsController> logger, 
+            IProductRepository productRepository, IConfiguration configuration)
         {
             _logger = logger;
             _productRepository = productRepository;
+            this.configuration = configuration;
         }
 
         [HttpGet]
         public async Task<IEnumerable<Product>> Get()
         {
-            //var rng = new Random();
-            //return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            //{
-            //    Date = DateTime.Now.AddDays(index),
-            //    TemperatureC = rng.Next(-20, 55),
-            //    Summary = Summaries[rng.Next(Summaries.Length)]
-            //})
-            //.ToArray();
             return await _productRepository.GetAllAsync();
+        }
 
+        [HttpGet("cs")]
+        public  string GetCS()
+        {
+            return configuration.GetConnectionString("InventoryConnectionString");
+        }
+
+        [HttpGet("cs3")]
+        public string GetCS2()
+        {
+            return configuration.GetValue<string>("CONNECTIONSTRINGS:INVENTORYCONNECTIONSTRING");
+        }
+
+        [HttpGet("ver")]
+        public string GetVER()
+        {
+            return configuration.GetValue<string>("DOTNET_VERSION");
         }
     }
 }

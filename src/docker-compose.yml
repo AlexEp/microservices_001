@@ -13,3 +13,5 @@ services:
       context: .
       dockerfile: order/Order.API/Dockerfile
 
+  msdb:
+    image: mcr.microsoft.com/mssql/server:2017-latest

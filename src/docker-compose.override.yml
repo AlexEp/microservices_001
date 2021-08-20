@@ -5,16 +5,34 @@ services:
     container_name: ms-test.inventory.api
     environment:
         - ASPNETCORE_ENVIRONMENT=Development
-        - "Server=ms-test.db;Database=InventoryDb;User Id=InventoryUser;Password=SwN12345678;"            
+        - "ConnectionStrings__InventoryConnectionString=Server=msdb;Database=InventoryDb;User Id=sa;Password=AlEx12345678"  
+    depends_on:
+        - msdb
     ports:
-        - "8001:80"
+        - "8501:80"
+    networks:
+        - ms_network 
   order.api:
-    container_name: ms-test.ordering.api
+    container_name: ms-test.order.api
     environment:
         - ASPNETCORE_ENVIRONMENT=Development" 
-        - "ApiSettings:InventoryUrl=ms-test.inventory.api"
+        - "ApiSettings__InventoryUrl=inventory.api"
     depends_on:
-        - ms-test.inventory.api
+        - inventory.api
     ports:
-        - "8002:80"
-
+        - "8502:80"
+    networks:
+        - ms_network 
+  msdb:
+    container_name: msdb
+    environment:
+        SA_PASSWORD: "AlEx12345678"
+        ACCEPT_EULA: "Y"
+    restart: always
+    ports:
+        - "8030:1433"
+    networks:
+         - ms_network 
+networks:
+    ms_network:
+        driver: bridge
