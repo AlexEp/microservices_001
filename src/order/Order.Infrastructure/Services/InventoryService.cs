@@ -19,7 +19,7 @@ namespace Order.Infrastructure.Services
             this._communicationProvider = communicationProvider;
         }
         public async Task<IEnumerable<Product>> GetAsync() {
-            var url = "http://localhost:8002/Products";
+            var url = $"{_baseAddress}/api/v1/Products";
             var productList = await _communicationProvider.SendAsync<IList<Product>, object>(url, HttpMethod.Get,null);
             return productList;
 

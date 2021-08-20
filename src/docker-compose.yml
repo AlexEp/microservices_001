@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  inventory.api:
+    image: ${DOCKER_REGISTRY-}inventoryapi
+    build:
+      context: .
+      dockerfile: Inventory/Inventory.API/Dockerfile
+
+  order.api:
+    image: ${DOCKER_REGISTRY-}orderapi
+    build:
+      context: .
+      dockerfile: order/Order.API/Dockerfile
+

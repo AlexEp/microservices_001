@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Inventory.API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/v1/[controller]")]
     public class ProductsController : ControllerBase
     {
         private static readonly string[] Summaries = new[]

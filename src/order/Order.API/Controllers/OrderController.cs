@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Order.API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/v1/[controller]")]
     public class OrderController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
