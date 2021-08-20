@@ -22,7 +22,7 @@ namespace Inventory.Infrastructure.Data
             services.AddInfraMapper(configuration);
             services.AddInfraData(configuration);
             services.AddInfraCache(configuration);
-            services.AddInfraConnection(configuration);
+            services.AddInfraCommunication(configuration);
 
             return services;
         }
@@ -54,7 +54,7 @@ namespace Inventory.Infrastructure.Data
             return services;
         }
 
-        public static IServiceCollection AddInfraConnection(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddInfraCommunication(this IServiceCollection services, IConfiguration configuration)
         {
             //TODO: add Connection
             return services;
