@@ -6,6 +6,7 @@ services:
     environment:
         - ASPNETCORE_ENVIRONMENT=Development
         - "ConnectionStrings__InventoryConnectionString=Server=msdb;Database=InventoryDb;User Id=sa;Password=AlEx12345678"  
+        - "SERVER_NAME=ms-test.inventory.api"  
     depends_on:
         - msdb
     ports:
@@ -17,6 +18,7 @@ services:
     environment:
         - ASPNETCORE_ENVIRONMENT=Development
         - "ApiSettings__InventoryUrl=http://inventory.api"
+        - "SERVER_NAME=ms-test.order.api"  
     ports:
         - "8502:80"
     networks:
@@ -26,6 +28,10 @@ services:
     environment:
         SA_PASSWORD: "AlEx12345678"
         ACCEPT_EULA: "Y"
+    volumes: 
+        - C:\Dev Else\BACKUP\KEEP:/var/opt/mssql/backups
+        - ms_mssqluser:/var/opt/sqlserver
+        - ms_mssqlsystem:/var/opt/mssql
     restart: always
     ports:
         - "8030:1433"
@@ -34,3 +40,9 @@ services:
 networks:
     ms_network:
         driver: bridge
+
+volumes:
+  ms_mssqluser:
+    driver: local
+  ms_mssqlsystem:
+    driver: local

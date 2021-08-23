@@ -7,13 +7,6 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\MS.Communication\MS.Communication.csproj" />
-    <ProjectReference Include="..\..\..\MS.Logger\MS.Logger.csproj" />
-    <ProjectReference Include="..\Order.Domain\Order.Domain.csproj" />
   </ItemGroup>
 
 </Project>

@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Order.Infrastructure.Communication
+namespace MS.Communication
 {
     public interface ICommunicationProvider
     {

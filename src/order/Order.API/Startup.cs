@@ -23,10 +23,21 @@ namespace Order.API
 
         public IConfiguration Configuration { get; }
 
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddInfraAll(Configuration);
+            /* *** [Logger settings] *** */
+            var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder
+                    .AddConfiguration(Configuration.GetSection("Logging"))
+                    .AddConsole();
+            });
+
+            //var logger = logScope.ServiceProvider.GetService<ILogger<Startup>>();
+
+            services.AddInfraAll(Configuration, loggerFactory.CreateLogger<Startup>());
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
