@@ -11,18 +11,16 @@ services:
     ports:
         - "8501:80"
     networks:
-        - ms_network 
+        - ms_network
   order.api:
     container_name: ms-test.order.api
     environment:
-        - ASPNETCORE_ENVIRONMENT=Development" 
-        - "ApiSettings__InventoryUrl=inventory.api"
-    depends_on:
-        - inventory.api
+        - ASPNETCORE_ENVIRONMENT=Development
+        - "ApiSettings__InventoryUrl=http://inventory.api"
     ports:
         - "8502:80"
     networks:
-        - ms_network 
+        - ms_network
   msdb:
     container_name: msdb
     environment:
@@ -32,7 +30,7 @@ services:
     ports:
         - "8030:1433"
     networks:
-         - ms_network 
+         - ms_network
 networks:
     ms_network:
         driver: bridge

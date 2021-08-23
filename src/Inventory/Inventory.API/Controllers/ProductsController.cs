@@ -37,22 +37,6 @@ namespace Inventory.API.Controllers
             return await _productRepository.GetAllAsync();
         }
 
-        [HttpGet("cs")]
-        public  string GetCS()
-        {
-            return configuration.GetConnectionString("InventoryConnectionString");
-        }
 
-        [HttpGet("cs3")]
-        public string GetCS2()
-        {
-            return configuration.GetValue<string>("CONNECTIONSTRINGS:INVENTORYCONNECTIONSTRING");
-        }
-
-        [HttpGet("ver")]
-        public string GetVER()
-        {
-            return configuration.GetValue<string>("DOTNET_VERSION");
-        }
     }
 }
