@@ -36,10 +36,10 @@ namespace MS.Communication
         {
             HttpRequestMessage request = new HttpRequestMessage(method, url);
             T_OUT response = default(T_OUT);
-
+            string jsonParam ="";
             if (param != null)
             {
-                var jsonParam = ConvertToJson<T_IN>(param);
+                jsonParam = ConvertToJson<T_IN>(param);
                 request.Content = new StringContent(jsonParam, Encoding.UTF8, ContentType);
             }
 
@@ -49,6 +49,8 @@ namespace MS.Communication
             var serverName = _configuration["SERVER_NAME"];
 
             _logger.LogDebug($"HTTP REQUEST : {serverName} [id={id} ip={ip}]  ---> {url}");
+            //_logger.LogTrace(jsonParam);
+
             var httpResponse = await _httpClient.SendAsync(request);
             //if ((int)httpReplay.StatusCode < 200 || (int)httpReplay.StatusCode >= 500)
             //{
