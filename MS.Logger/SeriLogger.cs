@@ -25,7 +25,7 @@ namespace MS.Logger
                     .WriteTo.Elasticsearch(
                         new ElasticsearchSinkOptions(new Uri(elasticUri))
                         {
-                            IndexFormat = $"applogs-{context.HostingEnvironment.ApplicationName?.ToLower().Replace(".", "-")}-{context.HostingEnvironment.EnvironmentName?.ToLower().Replace(".", "-")}-{DateTime.UtcNow:yyyy-MM}",
+                            IndexFormat = $"Alexepp.MStestApp-{context.HostingEnvironment.EnvironmentName?.ToLower().Replace(".", "-")}-{context.HostingEnvironment.ApplicationName?.ToLower().Replace(".", "-")}-{DateTime.UtcNow:yyyy-MM}",
                             AutoRegisterTemplate = true,
                             NumberOfShards = 2,
                             NumberOfReplicas = 1

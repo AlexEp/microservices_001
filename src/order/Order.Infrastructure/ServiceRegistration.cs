@@ -2,15 +2,17 @@
 using Order.Infrastructure.Services;
 using Microsoft.Extensions.Configuration;
 using MS.Communication;
-using Microsoft.Extensions.Logging;
+using MicrosoftLogging = Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Hosting;
+using Serilog;
+using MS.Logger;
 
 namespace Order.Infrastructure
 {
     public static class OrderServiceRegistration
     {
-        public static IServiceCollection AddInfraAll(this IServiceCollection services, IConfiguration configuration,ILogger logger)
+        public static IServiceCollection AddInfraAll(this IServiceCollection services, IConfiguration configuration, MicrosoftLogging.ILogger logger)
         {
-            services.AddInfraLoggers(configuration);
             services.AddInfraTrace(configuration);
             //services.AddInfraMapper(configuration);
             //services.AddInfraData(configuration);
@@ -42,18 +44,19 @@ namespace Order.Infrastructure
         //    return services;
         //}
 
-        public static IServiceCollection AddInfraLoggers(this IServiceCollection services, IConfiguration configuration)
+        public static IHostBuilder UseMSExtentions(this IHostBuilder host)
         {
-            //TODO: add loggers
-            return services;
+            host.UseSerilog(SeriLogger.Configure);
+            return host;
         }
 
-        public static IServiceCollection AddInfraCommunication(this IServiceCollection services, IConfiguration configuration,ILogger logger)
+        public static IServiceCollection AddInfraCommunication(this IServiceCollection services, IConfiguration configuration, MicrosoftLogging.ILogger logger)
         {
+
             services.AddCommunicationProvider(configuration, logger); //Add general Communication provider from  MS.Communication
       
             //Add services proxies
-            services.AddScoped<IInventoryService>(sp => new InventoryService(configuration["ApiSettings:InventoryUrl"], sp.GetRequiredService<ICommunicationProvider>(), configuration));
+            services.AddScoped<IInventoryService>(sp => new InventoryService(configuration["ApiSettings:InventoryUrl"], sp.GetService<ICommunicationProvider>(), configuration));
 
             return services;
         }

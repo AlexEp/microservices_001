@@ -5,6 +5,9 @@ using Inventory.Infrastructure.Data.Context;
 using Inventory.Infrastructure.Data.Repositories;
 using AutoMapper;
 using Inventory.Infrastructure.Mappings;
+using MS.Logger;
+using Microsoft.Extensions.Hosting;
+using Serilog;
 
 namespace Inventory.Infrastructure.Data
 {
@@ -12,7 +15,6 @@ namespace Inventory.Infrastructure.Data
     {
         public static IServiceCollection AddInfraAll(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddInfraLoggers(configuration);
             services.AddInfraTrace(configuration);
             services.AddInfraMapper(configuration);
             services.AddInfraData(configuration);
@@ -33,6 +35,8 @@ namespace Inventory.Infrastructure.Data
             return services;
         }
 
+
+
         public static IServiceCollection AddInfraData(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<InventoryContext>(options =>
@@ -43,11 +47,6 @@ namespace Inventory.Infrastructure.Data
             return services;
         }
 
-        public static IServiceCollection AddInfraLoggers(this IServiceCollection services, IConfiguration configuration)
-        {
-            //TODO: add loggers
-            return services;
-        }
 
         public static IServiceCollection AddInfraCommunication(this IServiceCollection services, IConfiguration configuration)
         {
@@ -64,7 +63,14 @@ namespace Inventory.Infrastructure.Data
             //TODO: add Trace
             return services;
         }
-        
+
+
+        public static IHostBuilder UseMSExtentions(this IHostBuilder host)
+        {
+            host.UseSerilog(SeriLogger.Configure);
+            return host;
+        }
+
 
     }
 }

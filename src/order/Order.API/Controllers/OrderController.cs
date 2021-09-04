@@ -30,6 +30,7 @@ namespace Order.API.Controllers
         [HttpGet]
         public async Task<IEnumerable<Product>> GetAsync()
         {
+      
            return await  _inventoryService.GetAsync();
         }
     }

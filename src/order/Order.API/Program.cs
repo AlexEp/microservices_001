@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using MS.Logger;
+using Order.Infrastructure;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace Order.API
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .UseSerilog(SeriLogger.Configure)
+                .UseMSExtentions()
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

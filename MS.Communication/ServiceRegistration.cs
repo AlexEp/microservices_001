@@ -10,8 +10,15 @@ namespace MS.Communication
     {
         public static IServiceCollection AddCommunicationProvider(this IServiceCollection services, IConfiguration configuration,ILogger logger)
         {
-            services.AddHttpClient(); //Add IHttpClientFactory
-            services.AddScoped<ICommunicationProvider>(sp => new CommunicationProvider(sp.GetRequiredService<IHttpClientFactory>(), configuration, logger));
+            services.AddTransient<LoggingDelegatingHandler>();
+
+            services.AddHttpClient<BasicHttpClient>()
+              .AddHttpMessageHandler<LoggingDelegatingHandler>();
+
+            services.AddScoped<ICommunicationProvider>(sp => new CommunicationProvider(sp.GetService<BasicHttpClient>(), configuration, 
+                sp.GetRequiredService<ILogger<CommunicationProvider>>()));
+               
+              
           
             return services;
         }

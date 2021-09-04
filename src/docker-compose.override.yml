@@ -6,7 +6,7 @@ services:
     environment:
         - ASPNETCORE_ENVIRONMENT=Development
         - "ConnectionStrings__InventoryConnectionString=Server=msdb;Database=InventoryDb;User Id=sa;Password=AlEx12345678"  
-        - "SERVER_NAME=ms-test.inventory.api"  
+        - "ElasticConfiguration__URI=http://elasticsearch:9200"
     depends_on:
         - msdb
     ports:
@@ -18,7 +18,7 @@ services:
     environment:
         - ASPNETCORE_ENVIRONMENT=Development
         - "ApiSettings__InventoryUrl=http://inventory.api"
-        - "SERVER_NAME=ms-test.order.api"  
+        - "ElasticConfiguration__URI=http://elasticsearch:9200"
     ports:
         - "8502:80"
     networks:
@@ -49,6 +49,8 @@ services:
         - "9200:9200"
     volumes:
         - elasticsearch-data:/usr/share/elasticsearch/data   
+    networks:
+        - ms_network
 
   kibana:
     container_name: kibana
@@ -58,6 +60,9 @@ services:
         - elasticsearch
     ports:
         - "5601:5601" 
+    networks:
+        - ms_network
+
 networks:
     ms_network:
         driver: bridge

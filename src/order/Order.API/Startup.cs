@@ -31,7 +31,7 @@ namespace Order.API
             var loggerFactory = LoggerFactory.Create(builder =>
             {
                 builder
-                    .AddConfiguration(Configuration.GetSection("Logging"))
+                    .AddConfiguration(Configuration.GetSection("Serilog"))
                     .AddConsole();
             });
 

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Sockets;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,16 +21,15 @@ namespace MS.Communication
    
         private readonly IConfiguration _configuration;
         private readonly ILogger _logger;
-        private readonly IHttpClientFactory _httpClientFactory;
-        private readonly HttpClient _httpClient;
+        private readonly BasicHttpClient _httpClient;
         //private readonly string _remoteServiceBaseUrl;
 
-        public CommunicationProvider(IHttpClientFactory httpClientFactory, IConfiguration configuration, ILogger logger)
+        public CommunicationProvider(BasicHttpClient httpClient, IConfiguration configuration, ILogger logger )
         {
             _configuration = configuration;
             this._logger = logger;
-            _httpClientFactory = httpClientFactory;
-            _httpClient = _httpClientFactory.CreateClient(); //Create default  httpClient
+           // _httpClientFactory = httpClientFactory;
+            _httpClient = httpClient; //_httpClientFactory.CreateClient(); //Create default  httpClient
         }
 
         public async Task<T_OUT> SendAsync<T_OUT, T_IN>(string url,HttpMethod method,T_IN param)
@@ -46,9 +46,9 @@ namespace MS.Communication
             //Log ...
             var id = Dns.GetHostName(); // get container id
             var ip = Dns.GetHostEntry(id).AddressList.FirstOrDefault(x => x.AddressFamily == AddressFamily.InterNetwork);
-            var serverName = _configuration["SERVER_NAME"];
-
-            _logger.LogDebug($"HTTP REQUEST : {serverName} [id={id} ip={ip}]  ---> {url}");
+            var serverName = @Assembly.GetEntryAssembly().GetName().Name;
+        
+            _logger.LogError($"HTTP REQUEST : {serverName} [id={id} ip={ip}]  ---> {url}");
             //_logger.LogTrace(jsonParam);
 
             var httpResponse = await _httpClient.SendAsync(request);
